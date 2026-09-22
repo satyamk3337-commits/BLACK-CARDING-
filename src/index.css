@@ -1,0 +1,46 @@
+@import "tailwindcss";
+
+/* Glowing & Shining Chamak Effects for BUY Button */
+@keyframes chamakSweep {
+  0% {
+    transform: translateX(-160%) skewX(-25deg);
+  }
+  35%, 100% {
+    transform: translateX(320%) skewX(-25deg);
+  }
+}
+
+@keyframes chamakGlow {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(99, 102, 241, 0.55), 0 0 30px rgba(168, 85, 247, 0.35);
+    border-color: rgba(168, 85, 247, 0.6);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(129, 140, 248, 0.85), 0 0 45px rgba(236, 72, 153, 0.6), inset 0 0 14px rgba(255, 255, 255, 0.35);
+    border-color: rgba(236, 72, 153, 0.95);
+  }
+}
+
+@keyframes chamakSparkle {
+  0%, 100% {
+    opacity: 0.7;
+    transform: scale(0.9) rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.25) rotate(180deg);
+  }
+}
+
+.chamak-btn {
+  animation: chamakGlow 2.2s ease-in-out infinite;
+}
+
+.chamak-beam {
+  animation: chamakSweep 2.4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.chamak-star {
+  animation: chamakSparkle 1.8s ease-in-out infinite;
+}
+

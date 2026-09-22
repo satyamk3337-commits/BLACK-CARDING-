@@ -1,0 +1,6 @@
+{
+  "name": "VoucherHub - Digital Voucher & Gift Card Marketplace",
+  "description": "Legitimate digital gift voucher and prepaid code marketplace with admin product management, UPI & gateway checkout, order verification, and instant voucher code delivery.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

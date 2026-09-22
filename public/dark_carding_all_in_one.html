@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DARK CARDING - Verified Virtual Balance Cards</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #070913;
+      color: #f3f4f6;
+    }
+    code, pre, .font-mono {
+      font-family: 'JetBrains+Mono', monospace;
+    }
+
+    /* Chamakdar BUY Button Animations */
+    @keyframes chamakSweep {
+      0% { transform: translateX(-160%) skewX(-25deg); }
+      35%, 100% { transform: translateX(320%) skewX(-25deg); }
+    }
+    @keyframes chamakGlow {
+      0%, 100% {
+        box-shadow: 0 0 15px rgba(99, 102, 241, 0.55), 0 0 30px rgba(168, 85, 247, 0.35);
+        border-color: rgba(168, 85, 247, 0.6);
+      }
+      50% {
+        box-shadow: 0 0 25px rgba(129, 140, 248, 0.85), 0 0 45px rgba(236, 72, 153, 0.6), inset 0 0 14px rgba(255, 255, 255, 0.35);
+        border-color: rgba(236, 72, 153, 0.95);
+      }
+    }
+    @keyframes chamakSparkle {
+      0%, 100% { opacity: 0.7; transform: scale(0.9) rotate(0deg); }
+      50% { opacity: 1; transform: scale(1.25) rotate(180deg); }
+    }
+
+    .chamak-btn {
+      animation: chamakGlow 2.2s ease-in-out infinite;
+    }
+    .chamak-beam {
+      animation: chamakSweep 2.4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    }
+    .chamak-star {
+      animation: chamakSparkle 1.8s ease-in-out infinite;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #0b0d1b; }
+    ::-webkit-scrollbar-thumb { background: #262b47; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #434c7d; }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col bg-[#070913] text-gray-100 antialiased selection:bg-indigo-500 selection:text-white">
+
+  <!-- Top Announcement Bar -->
+  <div id="top-announcement" class="bg-gradient-to-r from-blue-900/60 via-indigo-900/60 to-purple-900/60 border-b border-indigo-500/20 py-1.5 px-4 text-center text-xs font-semibold text-indigo-200 flex items-center justify-center gap-2">
+    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+    <span id="announcement-text">⚡ Automated Digital Delivery • Genuine Brands • Pending Verification Status Active</span>
+  </div>
+
+  <!-- Header -->
+  <header class="sticky top-0 z-30 bg-[#0c0e1d]/90 backdrop-blur-md border-b border-white/10 px-4 lg:px-8 py-3.5 flex items-center justify-between">
+    <div class="flex items-center gap-3 cursor-pointer" onclick="location.reload()">
+      <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 via-purple-600 to-pink-500 flex items-center justify-center font-black text-white text-base shadow-[0_0_15px_rgba(99,102,241,0.5)]">
+        DC
+      </div>
+      <div>
+        <h1 id="store-title" class="font-extrabold text-base sm:text-lg tracking-wider text-white">DARK CARDING</h1>
+        <p class="text-[10px] text-gray-400 -mt-0.5 tracking-wide">VERIFIED BALANCE CARDS & VAULT</p>
+      </div>
+    </div>
+
+    <!-- Header Actions -->
+    <div class="flex items-center gap-2 sm:gap-3">
+      <button onclick="openSupportModal()" class="px-3 py-1.5 rounded-lg bg-blue-500/15 hover:bg-blue-500/25 border border-blue-500/30 text-blue-300 text-xs font-bold transition-all flex items-center gap-1.5">
+        <span>💬 Support</span>
+      </button>
+
+      <button onclick="openOrdersModal()" class="relative px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-bold transition-all flex items-center gap-1.5 text-gray-200">
+        <span>📦 My Orders</span>
+        <span id="orders-badge" class="hidden px-1.5 py-0.2 rounded-full bg-emerald-500 text-black text-[10px] font-extrabold">0</span>
+      </button>
+
+      <button onclick="openAdminModal()" class="px-3 py-1.5 rounded-lg bg-gradient-to-r from-amber-500/20 to-orange-500/20 hover:from-amber-500/30 hover:to-orange-500/30 border border-amber-500/40 text-amber-300 text-xs font-extrabold transition-all flex items-center gap-1">
+        <span>⚙️ ADMIN</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Hero & Filter Bar -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+    <!-- Notice Card -->
+    <div class="rounded-2xl p-4 sm:p-5 bg-gradient-to-r from-[#121528] via-[#161a33] to-[#121528] border border-white/10 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 shadow-xl">
+      <div class="space-y-1">
+        <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 text-xs font-bold">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span>100% VERIFIED VIRTUAL BALANCE CARDS</span>
+        </div>
+        <h2 class="text-xl sm:text-2xl font-black text-white">Instant Balance Cards Marketplace</h2>
+        <p class="text-xs sm:text-sm text-gray-400">Order securely with UPI QR. Admin approves & delivers complete verified card details with PIN & CCV instantly in your vault.</p>
+      </div>
+      <div class="flex items-center gap-2">
+        <button onclick="openSupportModal()" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs shadow-[0_0_15px_rgba(99,102,241,0.4)] transition-all">
+          Telegram: @<span id="hero-telegram">lottaygent</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Filters & Search -->
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-3">
+      <!-- Network Filter Tabs -->
+      <div class="flex items-center gap-1.5 bg-[#0e101d] p-1.5 rounded-xl border border-white/10 overflow-x-auto w-full sm:w-auto">
+        <button onclick="filterCategory('ALL')" class="cat-btn active px-3 py-1.5 rounded-lg text-xs font-bold transition-all bg-indigo-600 text-white" data-cat="ALL">ALL CARDS</button>
+        <button onclick="filterCategory('VISA')" class="cat-btn px-3 py-1.5 rounded-lg text-xs font-bold transition-all text-gray-400 hover:text-white" data-cat="VISA">VISA</button>
+        <button onclick="filterCategory('MASTERCARD')" class="cat-btn px-3 py-1.5 rounded-lg text-xs font-bold transition-all text-gray-400 hover:text-white" data-cat="MASTERCARD">MASTERCARD</button>
+        <button onclick="filterCategory('AMEX')" class="cat-btn px-3 py-1.5 rounded-lg text-xs font-bold transition-all text-gray-400 hover:text-white" data-cat="AMEX">AMEX</button>
+        <button onclick="filterCategory('RUPAY')" class="cat-btn px-3 py-1.5 rounded-lg text-xs font-bold transition-all text-gray-400 hover:text-white" data-cat="RUPAY">RUPAY</button>
+      </div>
+
+      <!-- Search Box -->
+      <div class="relative w-full sm:w-72">
+        <input type="text" id="search-input" oninput="renderCards()" placeholder="Search card, bank, or limit..." class="w-full pl-9 pr-3 py-2 rounded-xl bg-[#0e101d] border border-white/10 text-xs text-white placeholder:text-gray-500 focus:outline-none focus:border-indigo-500" />
+        <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-xs">🔍</span>
+      </div>
+    </div>
+
+    <!-- Cards Grid -->
+    <div id="cards-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+      <!-- Injected by JavaScript -->
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="mt-auto border-t border-white/10 bg-[#080a14] px-4 sm:px-8 py-6 text-xs text-gray-500 text-center sm:text-left flex flex-col sm:flex-row items-center justify-between gap-4">
+    <div class="flex items-center gap-2">
+      <span class="font-extrabold text-white">DARK CARDING</span>
+      <span>• Verified Virtual Cards Marketplace</span>
+    </div>
+    <div class="flex items-center gap-4">
+      <button onclick="openSupportModal()" class="hover:text-gray-300">Customer Support</button>
+      <span>•</span>
+      <button onclick="openOrdersModal()" class="hover:text-gray-300">My Orders</button>
+      <span>•</span>
+      <button onclick="openAdminModal()" class="text-amber-400 hover:text-amber-300 font-bold">Admin Portal</button>
+    </div>
+  </footer>
+
+  <!-- Floating Telegram Chamak Button -->
+  <div class="fixed bottom-5 right-5 z-40">
+    <button onclick="openSupportModal()" class="group flex items-center gap-2.5 px-4 py-2.5 rounded-full bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 text-white font-bold text-xs shadow-[0_0_25px_rgba(99,102,241,0.6)] border border-white/20 transition-all hover:scale-105 active:scale-95 chamak-btn">
+      <span class="text-sm">💬</span>
+      <div class="flex flex-col text-left">
+        <span class="text-[9px] uppercase tracking-wide opacity-80 leading-none">24/7 Live Desk</span>
+        <span class="font-mono text-xs font-bold leading-tight">@<span id="float-telegram">lottaygent</span></span>
+      </div>
+    </button>
+  </div>
+
+  <!-- MODAL 1: CHECKOUT & PAYMENT MODAL -->
+  <div id="payment-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-3 sm:p-4 bg-black/85 backdrop-blur-md overflow-y-auto">
+    <div class="relative w-full max-w-lg bg-[#0e101d] border border-indigo-500/40 rounded-2xl shadow-2xl overflow-hidden my-4">
+      <!-- Modal Header -->
+      <div class="flex items-center justify-between px-5 py-4 border-b border-white/10 bg-[#121528]">
+        <div class="flex items-center gap-2">
+          <span class="text-indigo-400 text-base">💳</span>
+          <h3 class="text-sm font-bold text-white uppercase tracking-wider">SECURE CHECKOUT & QR PAYMENT</h3>
+        </div>
+        <button onclick="closePaymentModal()" class="p-1 rounded-lg bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white">✕</button>
+      </div>
+
+      <div class="p-5 space-y-4 max-h-[80vh] overflow-y-auto">
+        <!-- Selected Card Summary -->
+        <div id="checkout-card-preview" class="p-4 rounded-xl bg-black/40 border border-white/10 space-y-2">
+          <!-- JS fills this -->
+        </div>
+
+        <!-- Payment Instructions & QR -->
+        <div class="p-4 rounded-xl bg-[#121528] border border-indigo-500/20 text-center space-y-3">
+          <div class="flex items-center justify-between text-xs">
+            <span class="font-bold text-gray-300">Scan & Pay via UPI / GPay / Paytm / PhonePe</span>
+            <span class="text-emerald-400 font-bold font-mono">10:00 SLA</span>
+          </div>
+
+          <div class="flex justify-center py-1">
+            <div class="p-2 bg-white rounded-xl shadow-lg inline-block">
+              <img id="checkout-qr-img" src="" alt="Payment QR" class="w-44 h-44 object-contain" />
+            </div>
+          </div>
+
+          <div class="flex items-center justify-center gap-2 bg-black/50 p-2 rounded-lg border border-white/10">
+            <span class="text-xs text-gray-400">UPI ID:</span>
+            <span id="checkout-upi-id" class="text-xs font-mono font-bold text-indigo-300 select-all"></span>
+            <button onclick="copyUpiId()" class="px-2 py-0.5 rounded bg-indigo-600/40 hover:bg-indigo-600 text-[10px] text-white font-bold">Copy</button>
+          </div>
+        </div>
+
+        <!-- Customer Form -->
+        <form id="payment-form" onsubmit="handlePlaceOrder(event)" class="space-y-3 text-xs">
+          <div>
+            <label class="block text-[11px] font-bold text-gray-300 uppercase mb-1">Your Full Name <span class="text-red-400">*</span></label>
+            <input type="text" id="cust-name" required placeholder="e.g. Ayush Kumar" class="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-white focus:outline-none focus:border-indigo-500" />
+          </div>
+
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block text-[11px] font-bold text-gray-300 uppercase mb-1">Phone / WhatsApp <span class="text-red-400">*</span></label>
+              <input type="tel" id="cust-phone" required placeholder="+91 9876543210" class="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-white focus:outline-none focus:border-indigo-500" />
+            </div>
+            <div>
+              <label class="block text-[11px] font-bold text-gray-300 uppercase mb-1">Email (Optional)</label>
+              <input type="email" id="cust-email" placeholder="customer@mail.com" class="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-white focus:outline-none focus:border-indigo-500" />
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-[11px] font-bold text-gray-300 uppercase mb-1">12-Digit UTR / UPI Ref Number <span class="text-red-400">*</span></label>
+            <input type="text" id="cust-utr" required placeholder="e.g. 408123456789" maxlength="20" class="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-white font-mono focus:outline-none focus:border-indigo-500" />
+            <p class="text-[10px] text-gray-500 mt-1">Enter the 12-digit transaction ID from your banking or UPI app after paying.</p>
+          </div>
+
+          <!-- Submit Chamak Button -->
+          <button type="submit" class="relative w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 hover:from-indigo-500 hover:to-pink-500 text-white font-black text-xs uppercase tracking-wider shadow-[0_0_25px_rgba(99,102,241,0.6)] chamak-btn overflow-hidden transition-all">
+            <span class="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/40 to-transparent chamak-beam pointer-events-none"></span>
+            <span class="relative z-10">⚡ SUBMIT PAYMENT & GET CARD IN VAULT</span>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 2: CUSTOMER MY ORDERS VAULT -->
+  <div id="orders-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-3 sm:p-4 bg-black/85 backdrop-blur-md overflow-y-auto">
+    <div class="relative w-full max-w-2xl bg-[#0e101d] border border-white/10 rounded-2xl shadow-2xl overflow-hidden my-4">
+      <div class="flex items-center justify-between px-5 py-4 border-b border-white/10 bg-[#121528]">
+        <div class="flex items-center gap-2">
+          <span>📦</span>
+          <h3 class="text-sm font-bold text-white uppercase tracking-wider">MY ORDERS & CARD VAULT</h3>
+        </div>
+        <button onclick="closeOrdersModal()" class="p-1 rounded-lg bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white">✕</button>
+      </div>
+
+      <div class="p-5 space-y-4 max-h-[80vh] overflow-y-auto">
+        <div id="orders-list-container" class="space-y-4">
+          <!-- Filled by JavaScript -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 3: CUSTOMER SUPPORT MODAL -->
+  <div id="support-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-3 sm:p-4 bg-black/85 backdrop-blur-md">
+    <div class="relative w-full max-w-md bg-[#0e101d] border border-blue-500/40 rounded-2xl shadow-2xl overflow-hidden">
+      <div class="flex items-center justify-between px-5 py-4 border-b border-white/10 bg-[#121528]">
+        <div class="flex items-center gap-2">
+          <span class="text-blue-400">💬</span>
+          <h3 class="text-sm font-bold text-white uppercase tracking-wider">CUSTOMER SUPPORT DESK</h3>
+        </div>
+        <button onclick="closeSupportModal()" class="p-1 rounded-lg bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white">✕</button>
+      </div>
+
+      <div class="p-5 space-y-4 text-xs">
+        <div class="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-200">
+          Instant 24/7 Live Support via Telegram & WhatsApp. Contact us for fast verification, card balance inquiries, or issues.
+        </div>
+
+        <div class="space-y-3">
+          <!-- Telegram Direct Button -->
+          <a id="support-tg-link" href="https://t.me/lottaygent" target="_blank" class="flex items-center justify-between p-3.5 rounded-xl bg-blue-600/20 hover:bg-blue-600/30 border border-blue-500/40 text-white font-bold transition-all">
+            <div class="flex items-center gap-2.5">
+              <span class="text-base">✈️</span>
+              <div>
+                <div class="text-xs">Direct Telegram Chat</div>
+                <div class="text-[10px] text-blue-300 font-mono">@<span id="support-modal-tg">lottaygent</span></div>
+              </div>
+            </div>
+            <span class="px-2.5 py-1 rounded bg-blue-500 text-black text-[10px] font-extrabold">OPEN CHAT ↗</span>
+          </a>
+
+          <!-- WhatsApp Direct Button -->
+          <a id="support-wa-link" href="https://wa.me/919876543210" target="_blank" class="flex items-center justify-between p-3.5 rounded-xl bg-emerald-600/20 hover:bg-emerald-600/30 border border-emerald-500/40 text-white font-bold transition-all">
+            <div class="flex items-center gap-2.5">
+              <span class="text-base">📱</span>
+              <div>
+                <div class="text-xs">Direct WhatsApp Support</div>
+                <div class="text-[10px] text-emerald-300 font-mono" id="support-modal-wa">+91 98765 43210</div>
+              </div>
+            </div>
+            <span class="px-2.5 py-1 rounded bg-emerald-500 text-black text-[10px] font-extrabold">MESSAGE ↗</span>
+          </a>
+        </div>
+
+        <div class="pt-2 border-t border-white/10 space-y-1 text-gray-400 text-[11px]">
+          <div>⏱ <b>Timing:</b> <span id="support-modal-timing">24/7 Live Support • 10 Mins SLA</span></div>
+          <div>✉ <b>Email:</b> <span id="support-modal-email">support@darkcarding.io</span></div>
+          <div>📞 <b>Helpline:</b> <span id="support-modal-phone">+91 80000 12345</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 4: ADMIN PANEL (Password Protected) -->
+  <div id="admin-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-3 sm:p-4 bg-black/85 backdrop-blur-md overflow-y-auto">
+    <div class="relative w-full max-w-4xl bg-[#0e101d] border border-amber-500/40 rounded-2xl shadow-2xl overflow-hidden my-4">
+      <!-- Admin Header -->
+      <div class="flex items-center justify-between px-5 py-4 border-b border-white/10 bg-[#121528]">
+        <div class="flex items-center gap-2">
+          <span class="text-amber-400">⚙️</span>
+          <h3 class="text-sm font-bold text-white uppercase tracking-wider">ADMIN CONTROL PANEL (RAJAJI)</h3>
+        </div>
+        <button onclick="closeAdminModal()" class="p-1 rounded-lg bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white">✕</button>
+      </div>
+
+      <!-- Password Lock Screen if not logged in -->
+      <div id="admin-auth-screen" class="p-8 text-center space-y-4 max-w-sm mx-auto">
+        <div class="w-12 h-12 rounded-2xl bg-amber-500/20 border border-amber-500/40 text-amber-400 flex items-center justify-center mx-auto text-xl">
+          🔒
+        </div>
+        <h4 class="font-bold text-white text-base">Enter Admin Password</h4>
+        <p class="text-xs text-gray-400">Default password: <code class="text-amber-300">rajaji5272</code> or <code class="text-amber-300">admin123</code></p>
+        <form onsubmit="handleAdminLogin(event)" class="space-y-3">
+          <input type="password" id="admin-pass-input" placeholder="Admin PIN / Password" class="w-full px-4 py-2.5 rounded-xl bg-black/60 border border-white/10 text-white text-center tracking-widest focus:outline-none focus:border-amber-500" />
+          <button type="submit" class="w-full py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-extrabold text-xs uppercase tracking-wider">
+            LOGIN TO ADMIN PANEL
+          </button>
+        </form>
+      </div>
+
+      <!-- Admin Tabs Screen -->
+      <div id="admin-content-screen" class="hidden">
+        <!-- Navigation Tabs -->
+        <div class="flex border-b border-white/10 bg-[#121528] px-4 overflow-x-auto text-xs font-bold">
+          <button onclick="switchAdminTab('orders')" class="admin-tab active py-3 px-4 text-amber-300 border-b-2 border-amber-400 uppercase" data-tab="orders">ORDERS & VERIFICATION</button>
+          <button onclick="switchAdminTab('support')" class="admin-tab py-3 px-4 text-gray-400 hover:text-white uppercase" data-tab="support">CUSTOMER SUPPORT SETTINGS</button>
+          <button onclick="switchAdminTab('qr')" class="admin-tab py-3 px-4 text-gray-400 hover:text-white uppercase" data-tab="qr">PAYMENT QR & UPI SETTINGS</button>
+        </div>
+
+        <div class="p-5 max-h-[75vh] overflow-y-auto">
+          <!-- TAB 1: ORDERS & VERIFICATION -->
+          <div id="admin-tab-orders" class="space-y-4">
+            <div class="flex items-center justify-between">
+              <h4 class="text-xs font-bold uppercase tracking-wider text-gray-300">Customer Orders Queue</h4>
+              <button onclick="renderAdminOrders()" class="px-2.5 py-1 rounded bg-white/5 hover:bg-white/10 text-xs text-gray-300">Refresh</button>
+            </div>
+            <div id="admin-orders-container" class="space-y-3">
+              <!-- Admin orders injected here -->
+            </div>
+          </div>
+
+          <!-- TAB 2: CUSTOMER SUPPORT SETTINGS -->
+          <form id="admin-support-form" onsubmit="handleSaveSupportSettings(event)" class="hidden space-y-4 text-xs">
+            <div class="p-3.5 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-200">
+              Yahan se aap Telegram username, WhatsApp number, aur working hours change kar sakte hain. Changes live turant save hote hain.
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-[11px] font-bold text-gray-300 uppercase mb-1">Telegram Support Username</label>
+                <div class="relative">
+                  <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 font-mono">@</span>
+                  <input type="text" id="adm-tg-user" class="w-full pl-7 pr-3 py-2 rounded-lg bg-black/50 border border-white/10 text-white font-mono" />
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-[11px] font-bold text-gray-300 uppercase mb-1">WhatsApp Support Number</label>
+                <input type="text" id="adm-wa-num" placeholder="+91 98765 43210" class="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-white font-mono" />
+              </div>
+
+              <div>
+                <label class="block text-[11px] font-bold text-gray-300 uppercase mb-1">Support Helpline / Phone</label>
+                <input type="text" id="adm-phone" placeholder="+91 80000 12345" class="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-white font-mono" />
+              </div>
+
+              <div>
+                <label class="block text-[11px] font-bold text-gray-300 uppercase mb-1">Official Support Email</label>
+                <input type="email" id="adm-email" placeholder="support@darkcarding.io" class="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-white font-mono" />
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-[11px] font-bold text-gray-300 uppercase mb-1">Working Hours & SLA</label>
+              <input type="text" id="adm-timing" placeholder="24/7 Live Support • 10 Mins SLA" class="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-white" />
+            </div>
+
+            <div>
+              <label class="block text-[11px] font-bold text-gray-300 uppercase mb-1">Top Announcement Notice</label>
+              <input type="text" id="adm-announcement" class="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-white" />
+            </div>
+
+            <button type="submit" class="w-full py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-extrabold uppercase">
+              SAVE CUSTOMER SUPPORT SETTINGS
+            </button>
+          </form>
+
+          <!-- TAB 3: PAYMENT QR SETTINGS -->
+          <form id="admin-qr-form" onsubmit="handleSaveQrSettings(event)" class="hidden space-y-4 text-xs">
+            <div class="p-3.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-200">
+              Yahan se aap UPI ID aur QR Code change kar sakte hain. Customer ko payment screen par yahi QR code dikhega.
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-[11px] font-bold text-gray-300 uppercase mb-1">Merchant UPI ID</label>
+                <input type="text" id="adm-upi-id" placeholder="merchant@upi" class="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-white font-mono" />
+              </div>
+
+              <div>
+                <label class="block text-[11px] font-bold text-gray-300 uppercase mb-1">Custom QR Code Image URL</label>
+                <input type="url" id="adm-qr-url" placeholder="https://example.com/my-qr.png" class="w-full px-3 py-2 rounded-lg bg-black/50 border border-white/10 text-white font-mono" />
+              </div>
+            </div>
+
+            <button type="submit" class="w-full py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-black font-black uppercase">
+              SAVE PAYMENT QR & UPI SETTINGS
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT: COMPLETE STANDALONE DATA & APPLICATION LOGIC -->
+  <script>
+    // --- 1. DEFAULT DATA & STATE ---
+    const DEFAULT_CARDS = [
+      {
+        id: 'c1',
+        title: 'Axis Bank Gold Virtual Card',
+        brand: 'Axis Bank',
+        cardNetwork: 'VISA',
+        sellingPrice: 1500,
+        originalPrice: 15000,
+        balanceLimit: '₹15,000 Balance',
+        cardNumberMasked: '5172 5258 4406 1926',
+        validity: '08/31',
+        theme: 'gold'
+      },
+      {
+        id: 'c2',
+        title: 'HDFC Regalia Platinum Card',
+        brand: 'HDFC Bank',
+        cardNetwork: 'VISA',
+        sellingPrice: 2500,
+        originalPrice: 25000,
+        balanceLimit: '₹25,000 Balance',
+        cardNumberMasked: '4111 5258 8821 3491',
+        validity: '11/30',
+        theme: 'blue'
+      },
+      {
+        id: 'c3',
+        title: 'SBI Global Infinite Virtual Card',
+        brand: 'SBI Bank',
+        cardNetwork: 'MASTERCARD',
+        sellingPrice: 3500,
+        originalPrice: 40000,
+        balanceLimit: '₹40,000 Balance',
+        cardNumberMasked: '5424 9912 6634 1109',
+        validity: '05/32',
+        theme: 'purple'
+      },
+      {
+        id: 'c4',
+        title: 'ICICI Sapphiro Corporate Card',
+        brand: 'ICICI Bank',
+        cardNetwork: 'MASTERCARD',
+        sellingPrice: 5000,
+        originalPrice: 65000,
+        balanceLimit: '₹65,000 Balance',
+        cardNumberMasked: '5258 1102 7741 8832',
+        validity: '09/31',
+        theme: 'dark'
+      },
+      {
+        id: 'c5',
+        title: 'American Express Centurion Black',
+        brand: 'American Express',
+        cardNetwork: 'AMEX',
+        sellingPrice: 8500,
+        originalPrice: 120000,
+        balanceLimit: '₹1,20,000 Balance',
+        cardNumberMasked: '3772 5258 4406 192',
+        validity: '12/32',
+        theme: 'dark'
+      },
+      {
+        id: 'c6',
+        title: 'RuPay Platinum Government Card',
+        brand: 'PNB Bank',
+        cardNetwork: 'RUPAY',
+        sellingPrice: 1200,
+        originalPrice: 12000,
+        balanceLimit: '₹12,000 Balance',
+        cardNumberMasked: '6074 5258 4406 8812',
+        validity: '04/29',
+        theme: 'emerald'
+      }
+    ];
+
+    const DEFAULT_SETTINGS = {
+      storeName: 'DARK CARDING',
+      telegramUsername: 'lottaygent',
+      supportWhatsapp: '+91 98765 43210',
+      supportPhone: '+91 80000 12345',
+      supportEmail: 'support@darkcarding.io',
+      supportTiming: '24/7 Live Support • 10 Mins SLA',
+      announcementBanner: '⚡ Automated Digital Delivery • Genuine Brands • Pending Verification Status Active',
+      upiId: 'darkcarding@upi',
+      customQrUrl: 'https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=upi://pay?pa=darkcarding@upi%26pn=DarkCarding%26cu=INR'
+    };
+
+    // Load from LocalStorage or initialize
+    let settings = JSON.parse(localStorage.getItem('dc_settings')) || DEFAULT_SETTINGS;
+    let orders = JSON.parse(localStorage.getItem('dc_orders')) || [];
+    let currentCategory = 'ALL';
+    let selectedCardForCheckout = null;
+
+    function saveState() {
+      localStorage.setItem('dc_settings', JSON.stringify(settings));
+      localStorage.setItem('dc_orders', JSON.stringify(orders));
+      updateUI();
+    }
+
+    function updateUI() {
+      document.getElementById('store-title').innerText = settings.storeName;
+      document.getElementById('announcement-text').innerText = settings.announcementBanner;
+      document.getElementById('hero-telegram').innerText = settings.telegramUsername.replace('@', '');
+      document.getElementById('float-telegram').innerText = settings.telegramUsername.replace('@', '');
+
+      // Support modal fields
+      document.getElementById('support-modal-tg').innerText = settings.telegramUsername.replace('@', '');
+      document.getElementById('support-tg-link').href = `https://t.me/${settings.telegramUsername.replace('@', '')}`;
+      document.getElementById('support-modal-wa').innerText = settings.supportWhatsapp;
+      document.getElementById('support-wa-link').href = `https://wa.me/${settings.supportWhatsapp.replace(/[^0-9]/g, '')}`;
+      document.getElementById('support-modal-timing').innerText = settings.supportTiming;
+      document.getElementById('support-modal-email').innerText = settings.supportEmail;
+      document.getElementById('support-modal-phone').innerText = settings.supportPhone;
+
+      // Orders badge
+      const badge = document.getElementById('orders-badge');
+      if (orders.length > 0) {
+        badge.innerText = orders.length;
+        badge.classList.remove('hidden');
+      } else {
+        badge.classList.add('hidden');
+      }
+    }
+
+    // --- 2. RENDER CARDS WITH SHINING BUY BUTTON ---
+    function renderCards() {
+      const query = document.getElementById('search-input').value.toLowerCase();
+      const grid = document.getElementById('cards-grid');
+
+      const filtered = DEFAULT_CARDS.filter(c => {
+        const matchesCat = currentCategory === 'ALL' || c.cardNetwork === currentCategory;
+        const matchesQuery = c.title.toLowerCase().includes(query) || c.brand.toLowerCase().includes(query) || c.balanceLimit.toLowerCase().includes(query);
+        return matchesCat && matchesQuery;
+      });
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `<div class="col-span-full py-12 text-center text-gray-500 text-sm">No cards match your search.</div>`;
+        return;
+      }
+
+      grid.innerHTML = filtered.map(card => {
+        const gradientClass = card.theme === 'gold' ? 'from-amber-600/30 via-yellow-700/20 to-black'
+          : card.theme === 'blue' ? 'from-blue-600/30 via-indigo-700/20 to-black'
+          : card.theme === 'purple' ? 'from-purple-600/30 via-pink-700/20 to-black'
+          : card.theme === 'emerald' ? 'from-emerald-600/30 via-teal-700/20 to-black'
+          : 'from-gray-800/40 via-neutral-900/30 to-black';
+
+        return `
+          <div class="rounded-2xl p-4 bg-[#0d1020] border border-white/10 hover:border-indigo-500/40 transition-all flex flex-col justify-between group shadow-lg">
+            <div>
+              <!-- Visual Card Preview -->
+              <div class="relative h-44 rounded-xl p-4 bg-gradient-to-br ${gradientClass} border border-white/10 overflow-hidden flex flex-col justify-between shadow-inner">
+                <div class="flex justify-between items-start">
+                  <div>
+                    <span class="text-[10px] font-mono tracking-widest text-gray-400 uppercase font-bold">${card.brand}</span>
+                    <div class="text-xs font-black text-white">${card.balanceLimit}</div>
+                  </div>
+                  <span class="px-2 py-0.5 rounded bg-black/60 border border-white/15 text-[10px] font-extrabold text-white font-mono">${card.cardNetwork}</span>
+                </div>
+
+                <div class="space-y-1">
+                  <div class="font-mono text-sm tracking-widest text-white font-bold">${card.cardNumberMasked}</div>
+                  <div class="flex justify-between text-[10px] text-gray-400 font-mono">
+                    <span>HOLDER: AYUSH</span>
+                    <span>EXP: ${card.validity}</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Card Details -->
+              <div class="mt-3 space-y-1">
+                <h3 class="font-bold text-white text-sm leading-tight">${card.title}</h3>
+                <div class="flex items-baseline gap-2">
+                  <span class="text-lg font-black text-emerald-400">₹${card.sellingPrice.toLocaleString('en-IN')}</span>
+                  <span class="text-xs text-gray-500 line-through">₹${card.originalPrice.toLocaleString('en-IN')}</span>
+                  <span class="text-[10px] font-bold text-amber-400">90% OFF</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- SHINING CHAMAKDAR BUY BUTTON -->
+            <div class="mt-4">
+              <button onclick="openCheckout('${card.id}')" class="relative w-full py-2.5 px-4 rounded-xl text-xs font-black uppercase tracking-wider bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 hover:from-indigo-500 hover:to-pink-500 text-white border border-pink-400/50 shadow-[0_0_20px_rgba(168,85,247,0.5)] chamak-btn transition-all hover:scale-[1.02] active:scale-[0.98] overflow-hidden flex items-center justify-center gap-2 cursor-pointer">
+                <!-- Chamak Beam Sweep -->
+                <span class="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/50 to-transparent chamak-beam pointer-events-none"></span>
+                <span class="chamak-star text-amber-300">✨</span>
+                <span class="relative z-10">⚡ BUY NOW</span>
+                <span class="chamak-star text-yellow-300">✨</span>
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function filterCategory(cat) {
+      currentCategory = cat;
+      document.querySelectorAll('.cat-btn').forEach(btn => {
+        if (btn.getAttribute('data-cat') === cat) {
+          btn.className = 'cat-btn active px-3 py-1.5 rounded-lg text-xs font-bold transition-all bg-indigo-600 text-white';
+        } else {
+          btn.className = 'cat-btn px-3 py-1.5 rounded-lg text-xs font-bold transition-all text-gray-400 hover:text-white';
+        }
+      });
+      renderCards();
+    }
+
+    // --- 3. CHECKOUT & ORDER HANDLING ---
+    function openCheckout(cardId) {
+      const card = DEFAULT_CARDS.find(c => c.id === cardId);
+      if (!card) return;
+      selectedCardForCheckout = card;
+
+      document.getElementById('checkout-card-preview').innerHTML = `
+        <div class="flex items-center justify-between">
+          <div>
+            <h4 class="font-bold text-white text-sm">${card.title}</h4>
+            <span class="text-xs text-gray-400">${card.balanceLimit} • ${card.cardNetwork}</span>
+          </div>
+          <div class="text-right">
+            <span class="text-base font-black text-emerald-400">₹${card.sellingPrice.toLocaleString('en-IN')}</span>
+          </div>
+        </div>
+      `;
+
+      // Update QR Code
+      const upiUrl = `upi://pay?pa=${encodeURIComponent(settings.upiId)}&pn=DarkCarding&am=${card.sellingPrice}&cu=INR`;
+      const qrSrc = settings.customQrUrl || `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(upiUrl)}`;
+      document.getElementById('checkout-qr-img').src = qrSrc;
+      document.getElementById('checkout-upi-id').innerText = settings.upiId;
+
+      document.getElementById('payment-modal').classList.remove('hidden');
+      document.getElementById('payment-modal').classList.add('flex');
+    }
+
+    function closePaymentModal() {
+      document.getElementById('payment-modal').classList.add('hidden');
+      document.getElementById('payment-modal').classList.remove('flex');
+    }
+
+    function copyUpiId() {
+      navigator.clipboard.writeText(settings.upiId);
+      alert('UPI ID Copied: ' + settings.upiId);
+    }
+
+    function handlePlaceOrder(e) {
+      e.preventDefault();
+      const name = document.getElementById('cust-name').value.trim();
+      const phone = document.getElementById('cust-phone').value.trim();
+      const email = document.getElementById('cust-email').value.trim();
+      const utr = document.getElementById('cust-utr').value.trim();
+
+      const newOrder = {
+        id: 'ord_' + Date.now(),
+        orderNumber: 'DC-' + Math.floor(100000 + Math.random() * 900000),
+        cardId: selectedCardForCheckout.id,
+        cardTitle: selectedCardForCheckout.title,
+        price: selectedCardForCheckout.sellingPrice,
+        customerName: name,
+        customerPhone: phone,
+        customerEmail: email,
+        utr: utr,
+        status: 'pending', // pending, paid, rejected
+        createdAt: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        deliveredCard: null
+      };
+
+      orders.unshift(newOrder);
+      saveState();
+
+      closePaymentModal();
+      alert('Order Placed Successfully! Your order status is PENDING. Once Admin verifies the payment, complete card details will appear in your Orders vault.');
+      openOrdersModal();
+    }
+
+    // --- 4. MY ORDERS VAULT ---
+    function openOrdersModal() {
+      renderOrdersList();
+      document.getElementById('orders-modal').classList.remove('hidden');
+      document.getElementById('orders-modal').classList.add('flex');
+    }
+
+    function closeOrdersModal() {
+      document.getElementById('orders-modal').classList.add('hidden');
+      document.getElementById('orders-modal').classList.remove('flex');
+    }
+
+    function renderOrdersList() {
+      const container = document.getElementById('orders-list-container');
+      if (orders.length === 0) {
+        container.innerHTML = `
+          <div class="py-12 text-center text-gray-500 space-y-2">
+            <div class="text-3xl">📭</div>
+            <p>You have not placed any orders yet.</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = orders.map(ord => {
+        const isPaid = ord.status === 'paid';
+        const isRejected = ord.status === 'rejected';
+
+        return `
+          <div class="p-4 rounded-xl bg-black/50 border ${isPaid ? 'border-emerald-500/40' : 'border-white/10'} space-y-3">
+            <div class="flex items-center justify-between flex-wrap gap-2">
+              <div>
+                <span class="text-xs font-mono font-bold text-indigo-300">#${ord.orderNumber}</span>
+                <h4 class="font-bold text-white text-sm">${ord.cardTitle}</h4>
+                <span class="text-[11px] text-gray-400">UTR: <b class="font-mono text-gray-200">${ord.utr}</b> • ₹${ord.price} • ${ord.createdAt}</span>
+              </div>
+
+              <div>
+                ${isPaid ? `
+                  <span class="px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-xs font-bold flex items-center gap-1">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                    <span>VERIFIED & READY</span>
+                  </span>
+                ` : isRejected ? `
+                  <span class="px-2.5 py-1 rounded-full bg-red-500/20 text-red-300 border border-red-500/30 text-xs font-bold">
+                    REJECTED
+                  </span>
+                ` : `
+                  <span class="px-2.5 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 text-xs font-bold flex items-center gap-1">
+                    <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span>
+                    <span>PENDING VERIFICATION</span>
+                  </span>
+                `}
+              </div>
+            </div>
+
+            <!-- IF PAID: RENDER EXACT BOXED CARD SLIP -->
+            ${isPaid && ord.deliveredCard ? `
+              <div class="p-3.5 rounded-xl bg-[#080910] border border-emerald-500/30 space-y-3">
+                <div class="flex items-center justify-between text-xs">
+                  <span class="font-bold text-emerald-400">VERIFIED CARD DETAILS:</span>
+                  <button onclick="copyCardSlip('${ord.id}')" class="px-2.5 py-1 rounded bg-emerald-600 hover:bg-emerald-500 text-black font-extrabold text-[10px]">
+                    COPY COMPLETE SLIP
+                  </button>
+                </div>
+
+                <pre id="slip-${ord.id}" class="p-3 rounded-lg bg-black/80 font-mono text-emerald-300 text-xs whitespace-pre-wrap select-all border border-emerald-500/20">${ord.deliveredCard.formattedSlip}</pre>
+
+                <div class="flex items-center gap-2 text-xs">
+                  <button onclick="copyText('${ord.deliveredCard.accountNo}')" class="px-2.5 py-1 rounded bg-white/10 hover:bg-white/20 text-white font-mono text-[11px]">Copy Account No</button>
+                  <button onclick="copyText('${ord.deliveredCard.ccv}')" class="px-2.5 py-1 rounded bg-white/10 hover:bg-white/20 text-white font-mono text-[11px]">Copy CCV</button>
+                  <button onclick="copyText('${ord.deliveredCard.expiry}')" class="px-2.5 py-1 rounded bg-white/10 hover:bg-white/20 text-white font-mono text-[11px]">Copy MM/YY</button>
+                </div>
+              </div>
+            ` : isPending(ord) ? `
+              <div class="p-3 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-200 text-xs">
+                Payment received! Admin verification is currently active. Verification completes within 5-10 minutes, after which complete Account No, CCV, and PIN appear right here.
+              </div>
+            ` : ''}
+          </div>
+        `;
+      }).join('');
+    }
+
+    function isPending(ord) {
+      return ord.status === 'pending';
+    }
+
+    function copyCardSlip(ordId) {
+      const text = document.getElementById('slip-' + ordId).innerText;
+      navigator.clipboard.writeText(text);
+      alert('Verified Card Slip Copied to Clipboard!');
+    }
+
+    function copyText(val) {
+      navigator.clipboard.writeText(val);
+      alert('Copied: ' + val);
+    }
+
+    // --- 5. SUPPORT MODAL ---
+    function openSupportModal() {
+      document.getElementById('support-modal').classList.remove('hidden');
+      document.getElementById('support-modal').classList.add('flex');
+    }
+    function closeSupportModal() {
+      document.getElementById('support-modal').classList.add('hidden');
+      document.getElementById('support-modal').classList.remove('flex');
+    }
+
+    // --- 6. ADMIN CONTROL PANEL ---
+    let isAdminLoggedIn = false;
+
+    function openAdminModal() {
+      document.getElementById('admin-modal').classList.remove('hidden');
+      document.getElementById('admin-modal').classList.add('flex');
+      if (isAdminLoggedIn) {
+        showAdminContent();
+      }
+    }
+    function closeAdminModal() {
+      document.getElementById('admin-modal').classList.add('hidden');
+      document.getElementById('admin-modal').classList.remove('flex');
+    }
+
+    function handleAdminLogin(e) {
+      e.preventDefault();
+      const pass = document.getElementById('admin-pass-input').value;
+      if (pass === 'rajaji5272' || pass === 'admin123' || pass === 'admin') {
+        isAdminLoggedIn = true;
+        showAdminContent();
+      } else {
+        alert('Incorrect Admin Password!');
+      }
+    }
+
+    function showAdminContent() {
+      document.getElementById('admin-auth-screen').classList.add('hidden');
+      document.getElementById('admin-content-screen').classList.remove('hidden');
+
+      // Fill settings forms
+      document.getElementById('adm-tg-user').value = settings.telegramUsername.replace('@', '');
+      document.getElementById('adm-wa-num').value = settings.supportWhatsapp;
+      document.getElementById('adm-phone').value = settings.supportPhone;
+      document.getElementById('adm-email').value = settings.supportEmail;
+      document.getElementById('adm-timing').value = settings.supportTiming;
+      document.getElementById('adm-announcement').value = settings.announcementBanner;
+
+      document.getElementById('adm-upi-id').value = settings.upiId;
+      document.getElementById('adm-qr-url').value = settings.customQrUrl;
+
+      renderAdminOrders();
+    }
+
+    function switchAdminTab(tab) {
+      document.querySelectorAll('.admin-tab').forEach(btn => {
+        if (btn.getAttribute('data-tab') === tab) {
+          btn.className = 'admin-tab active py-3 px-4 text-amber-300 border-b-2 border-amber-400 uppercase';
+        } else {
+          btn.className = 'admin-tab py-3 px-4 text-gray-400 hover:text-white uppercase';
+        }
+      });
+
+      document.getElementById('admin-tab-orders').classList.toggle('hidden', tab !== 'orders');
+      document.getElementById('admin-support-form').classList.toggle('hidden', tab !== 'support');
+      document.getElementById('admin-qr-form').classList.toggle('hidden', tab !== 'qr');
+    }
+
+    function renderAdminOrders() {
+      const container = document.getElementById('admin-orders-container');
+      if (orders.length === 0) {
+        container.innerHTML = `<div class="text-center py-6 text-gray-500">No orders placed yet.</div>`;
+        return;
+      }
+
+      container.innerHTML = orders.map(ord => {
+        return `
+          <div class="p-3.5 rounded-xl bg-black/60 border border-white/10 flex flex-col md:flex-row items-start md:items-center justify-between gap-3 text-xs">
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="font-bold text-white font-mono">#${ord.orderNumber}</span>
+                <span class="px-2 py-0.5 rounded text-[10px] font-extrabold uppercase ${ord.status === 'paid' ? 'bg-emerald-500/20 text-emerald-400' : 'bg-amber-500/20 text-amber-400'}">${ord.status}</span>
+              </div>
+              <div class="text-gray-300 font-bold">${ord.cardTitle} (₹${ord.price})</div>
+              <div class="text-gray-400 text-[11px]">Customer: <b>${ord.customerName}</b> (${ord.customerPhone}) • UTR: <b class="font-mono text-indigo-300">${ord.utr}</b></div>
+            </div>
+
+            <div class="flex items-center gap-2">
+              ${ord.status === 'pending' ? `
+                <button onclick="adminRejectOrder('${ord.id}')" class="px-3 py-1.5 rounded-lg bg-red-600/20 hover:bg-red-600/30 border border-red-500/40 text-red-300 font-bold">Reject</button>
+                <button onclick="adminApproveOrder('${ord.id}')" class="px-4 py-1.5 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-black font-extrabold uppercase shadow-[0_0_10px_rgba(16,185,129,0.3)]">
+                  Verify & Deliver Card Details
+                </button>
+              ` : `
+                <span class="text-emerald-400 font-bold">✓ Delivered to Customer</span>
+              `}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // ADMIN APPROVE ORDER -> INSERTS THE EXACT REQUESTED CARD SLIP
+    function adminApproveOrder(ordId) {
+      const ord = orders.find(o => o.id === ordId);
+      if (!ord) return;
+
+      const card = DEFAULT_CARDS.find(c => c.id === ord.cardId);
+      const isAmex = card && (card.cardNetwork === 'AMEX' || card.brand.includes('Amex'));
+
+      const accountNo = isAmex ? '3772/5258/4406/1926' : '5172/5258/4406/1926';
+      const ccv = isAmex ? '7997' : '102';
+      const expiry = card?.validity || '08/31';
+      const holder = ord.customerName || 'AYUSH';
+      const country = 'India delhi';
+
+      const formattedSlip = `╭━━━━━━━━━━━━━━━━━━━━╮\n      💳 CARD DETAILS\n╰━━━━━━━━━━━━━━━━━━━━╯\n\n➤ ACCOUNT NO.\n   ${accountNo} ✅\n\n➤ CCV\n   ${ccv} ✅\n\n➤ MM/YY\n   ${expiry} ✅\n\n  Card Holder name — ${holder}\n\n  Country ${country}\n╭━━━━━━━━━━━━━━━━━━━━╮\n        VERIFIED ✅\n╰━━━━━━━━━━━━━━━━━━━━╯`;
+
+      ord.status = 'paid';
+      ord.deliveredCard = {
+        accountNo,
+        ccv,
+        expiry,
+        holder,
+        country,
+        formattedSlip
+      };
+
+      saveState();
+      renderAdminOrders();
+      alert('Order #' + ord.orderNumber + ' Approved! Verified Card Details have been released to the customer.');
+    }
+
+    function adminRejectOrder(ordId) {
+      const ord = orders.find(o => o.id === ordId);
+      if (!ord) return;
+      ord.status = 'rejected';
+      saveState();
+      renderAdminOrders();
+      alert('Order #' + ord.orderNumber + ' marked as Rejected.');
+    }
+
+    function handleSaveSupportSettings(e) {
+      e.preventDefault();
+      settings.telegramUsername = document.getElementById('adm-tg-user').value.trim();
+      settings.supportWhatsapp = document.getElementById('adm-wa-num').value.trim();
+      settings.supportPhone = document.getElementById('adm-phone').value.trim();
+      settings.supportEmail = document.getElementById('adm-email').value.trim();
+      settings.supportTiming = document.getElementById('adm-timing').value.trim();
+      settings.announcementBanner = document.getElementById('adm-announcement').value.trim();
+
+      saveState();
+      alert('Customer Support Settings Saved Successfully!');
+    }
+
+    function handleSaveQrSettings(e) {
+      e.preventDefault();
+      settings.upiId = document.getElementById('adm-upi-id').value.trim();
+      settings.customQrUrl = document.getElementById('adm-qr-url').value.trim();
+
+      saveState();
+      alert('Payment QR & UPI Settings Saved Successfully!');
+    }
+
+    // Initialize on Load
+    updateUI();
+    renderCards();
+  </script>
+</body>
+</html>
